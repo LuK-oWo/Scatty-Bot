@@ -4,6 +4,7 @@ import logging
 from dotenv import load_dotenv
 import os
 import random
+import copy  # Importado para copiar a lista de frases
 
 # --- Configuração de Ambiente e Token ---
 load_dotenv()
@@ -20,6 +21,59 @@ intents.members = True
 # O prefixo '!' não é mais necessário para slash commands,
 # mas podemos manter para comandos antigos, se houver.
 bot = commands.Bot(command_prefix='!', intents=intents)
+
+# --- LISTA DE FRASES (DEFINIÇÃO CONSTANTE) ---
+FRASES_ORIGINAIS = [
+    "💅🥤✨ E o nosso shake?? 😋💃🍓",
+    "🍔😭💔 Cadê o Hambúrguer desse lanxhyr 😭🍔😩",
+    "🥖💔😩 Cadê o patê pra passar na torrada amor 😭😭😭💀",
+    "🍽️😡💢 CADÊ MINHA COMIDA 😭🔥🍴",
+    "🏒🔥💅 O BASTÃO É MEU 😤⚔️💥",  # Overwatch vibes
+    "🪥🚰😩 Cadê a pia?? como eu faço pra escovar meus dentes 😭🧼",
+    "🍫🎄✨ Gentyr chocotonyyyr 😭🍩💀",
+    "🤨💀 Like seriously wtf was that 💀🤡😳",
+    "🚽💩🧻 Dessa vez vai ter que funcionar 😭🙏😩💦",
+    "😤📄💀 Você tá colando sua filha da putar 🤨👊📚",
+    "🎈🤡💅 Você gosta do balão 🎉😩🎈",
+    "🤪🎉🔥 Meu essa brincadeira é sensacionais 😭😂💃",
+    "😳👀💅 Saori DEIXA ESSA PASSAR 😭🫠✨",
+    "💃🔥💋 ahhn! Fazer um STRIPER 😩💀🕺",
+    "🕺🎶🎧 Oi Diego tudo bem?? como vai as baladas 😭🔥💃",
+    "🏆🥳💅 HAAHAAHAAN!! GANHEI... UHUL 😭💀✨",
+    "😈🔪 Eu vou te PUNIR!! e depois não vai ter volta 😭💅🔥",
+    "📖🤔💀 O que tá escrito aquir?? hmm... Scale? 😩📜",
+    "🌸💨 puhhrh! tá tirando né, eu coloco as flores aqui 😭🌷💀",
+    "💨😤😭 O meu peido é bem melhor que o seu 😭🍑💀",
+    "😭🍑💨 É ANOS DE PEIDO 😭💅💀",
+    "💩👑🔥 Bom já que todo mundo caga muito quero ver QUEM CAGA MAIS 😭💀🧻",
+    "💀💥😩 SABE OQ Q É... SCAAAAAAAAAAAAT 💅😭🔥",
+    "🧝‍♀️❓😭 pera amiga mas... o que que é um elfo 😭🌟✨",
+    "🧝✨💅 O elfo é um ser de luz que realiza pedidos 😭💀🌈",
+    "🍔🔥😭 agora você vai comer essa porra desse lanchyr 💅💀🍔",
+    "🐀👒💅 Eu sou uma rata senhora 😭✨🐁",
+    "🍫😩😭 o chocolate... eu deixei assim pra fazer na hora né 💀🍫💋",
+    "🧀🍽️😭 É MUSSSYR? de acordo com o que vocês comeram ó o que torna 😩💅",
+    "🎂😭😭 O bolo é ruim... a festa é ruim... Ninguééém vai vir mesmo... 😭💅🎈",
+    "⏰😅💀 OIir eu sou a Vitória você tá atrasado você não achar 😭💅",
+    "🥚😢💔 É os ovos de codorna 😭🥚😭",
+    "👅😱💀 A língua! a língua! a língua! 😭💅",
+    "😤💢😭 filadapulta... to com tanto ódio dessa desgraçada 😭💀🔥",
+    "🎯🔥💥 preparar... apontar... ó! FOGOOOO 😭💅💀",
+    "🏁💥🔥 ihhhh JÁ 😭💅",
+    "👗😳💅 OLhá as roupas que você visti- véste 😭👜💀",
+    "👑🙄💅 Respeito por favor, a sua superiora 😭💀",
+    "🍾😤💅 INÚTIL!! traga champagne 😭💀🥂",
+    "🥖😠😭 Pedi pra você por se não quis por... pois agora vou te mostrar a farinha 😩💅",
+    "💩💀😭 Comer... a merda... QUE MERDÃ 😭🧻🔥",
+    "🎸😭💅 O dia que eu saí de casa minha mãe... 😭🎶😭",
+    "💀🔥😭 quer? dou não, ESSE SCAT É MEU 😭💅💀",
+    "🥥🌺💅 Meus cocos vindos do HAWAII 😭🌴🔥",
+    "🍲😭💅 eu trouxe uma sopinha como prato principal 😭💀🥣"
+]
+
+# Variável GLOBAL de estado: rastreia as frases que ainda não foram usadas.
+# Inicializada com todas as frases.
+frases_disponiveis = copy.copy(FRASES_ORIGINAIS)
 
 
 # --- Eventos do Bot ---
@@ -49,63 +103,28 @@ async def on_member_join(member):
 
 # --- Comando de Slash (/frasesscat) ---
 
-# 1. Mudado de @bot.command para @bot.tree.command
-# 2. Adicionado 'description' (obrigatório para slash commands)
 @bot.tree.command(name="frasesscat", description="Envia uma frase aleatória do Scat!")
 async def frasescat_slash(
-        interaction: discord.Interaction  # 3. Mudado 'ctx' para 'interaction'
+        interaction: discord.Interaction
 ):
-    frases = [
-        "💅🥤✨ E o nosso shake?? 😋💃🍓",
-        "🍔😭💔 Cadê o Hambúrguer desse lanxhyr 😭🍔😩",
-        "🥖💔😩 Cadê o patê pra passar na torrada amor 😭😭😭💀",
-        "🍽️😡💢 CADÊ MINHA COMIDA 😭🔥🍴",
-        "🏒🔥💅 O BASTÃO É MEU 😤⚔️💥",  # Overwatch vibes
-        "🪥🚰😩 Cadê a pia?? como eu faço pra escovar meus dentes 😭🧼",
-        "🍫🎄✨ Gentyr chocotonyyyr 😭🍩💀",
-        "🤨💀 Like seriously wtf was that 💀🤡😳",
-        "🚽💩🧻 Dessa vez vai ter que funcionar 😭🙏😩💦",
-        "😤📄💀 Você tá colando sua filha da putar 🤨👊📚",
-        "🎈🤡💅 Você gosta do balão 🎉😩🎈",
-        "🤪🎉🔥 Meu essa brincadeira é sensacionais 😭😂💃",
-        "😳👀💅 Saori DEIXA ESSA PASSAR 😭🫠✨",
-        "💃🔥💋 ahhn! Fazer um STRIPER 😩💀🕺",
-        "🕺🎶🎧 Oi Diego tudo bem?? como vai as baladas 😭🔥💃",
-        "🏆🥳💅 HAAHAAHAAN!! GANHEI... UHUL 😭💀✨",
-        "😈🔪 Eu vou te PUNIR!! e depois não vai ter volta 😭💅🔥",
-        "📖🤔💀 O que tá escrito aquir?? hmm... Scale? 😩📜",
-        "🌸💨 puhhrh! tá tirando né, eu coloco as flores aqui 😭🌷💀",
-        "💨😤😭 O meu peido é bem melhor que o seu 😭🍑💀",
-        "😭🍑💨 É ANOS DE PEIDO 😭💅💀",
-        "💩👑🔥 Bom já que todo mundo caga muito quero ver QUEM CAGA MAIS 😭💀🧻",
-        "💀💥😩 SABE OQ Q É... SCAAAAAAAAAAAAT 💅😭🔥",
-        "🧝‍♀️❓😭 pera amiga mas... o que que é um elfo 😭🌟✨",  # Corrigido o caractere inicial
-        "🧝✨💅 O elfo é um ser de luz que realiza pedidos 😭💀🌈",  # Trocado '🤖' por '🧝' para consistência
-        "🍔🔥😭 agora você vai comer essa porra desse lanchyr 💅💀🍔",
-        "🐀👒💅 Eu sou uma rata senhora 😭✨🐁",
-        "🍫😩😭 o chocolate... eu deixei assim pra fazer na hora né 💀🍫💋",
-        "🧀🍽️😭 É MUSSSYR? de acordo com o que vocês comeram ó o que torna 😩💅",
-        "🎂😭😭 O bolo é ruim... a festa é ruim... Ninguééém vai vir mesmo... 😭💅🎈",
-        "⏰😅💀 OIir eu sou a Vitória você tá atrasado você não achar 😭💅",
-        "🥚😢💔 É os ovos de codorna 😭🥚😭",
-        "👅😱💀 A língua! a língua! a língua! 😭💅",
-        "😤💢😭 filadapulta... to com tanto ódio dessa desgraçada 😭💀🔥",
-        "🎯🔥💥 preparar... apontar... ó! FOGOOOO 😭💅💀",
-        "🏁💥🔥 ihhhh JÁ 😭💅",
-        "👗😳💅 OLhá as roupas que você visti- véste 😭👜💀",
-        "👑🙄💅 Respeito por favor, a sua superiora 😭💀",
-        "🍾😤💅 INÚTIL!! traga champagne 😭💀🥂",
-        "🥖😠😭 Pedi pra você por se não quis por... pois agora vou te mostrar a farinha 😩💅",
-        "💩💀😭 Comer... a merda... QUE MERDÃ 😭🧻🔥",
-        "🎸😭💅 O dia que eu saí de casa minha mãe... 😭🎶😭",
-        "💀🔥😭 quer? dou não, ESSE SCAT É MEU 😭💅💀",
-        "🥥🌺💅 Meus cocos vindos do HAWAII 😭🌴🔥",
-        "🍲😭💅 eu trouxe uma sopinha como prato principal 😭💀🥣"
-    ]
+    # Indica ao Python que estamos usando a variável global
+    global frases_disponiveis
 
-    resposta = random.choice(frases)
+    # 1. Checa se a lista de disponíveis está vazia
+    if not frases_disponiveis:
+        # Se estiver vazia, significa que todas as frases foram usadas.
+        # Recarrega a lista para um novo ciclo.
+        frases_disponiveis = copy.copy(FRASES_ORIGINAIS)
+        # Opcional: Avisar no console quando o ciclo recomeça
+        print("Ciclo de frases Scat completado. Recarregando as frases.")
 
-    # 4. Mudado 'ctx.send' para 'interaction.response.send_message'
+    # 2. Escolhe uma frase aleatória das disponíveis
+    resposta = random.choice(frases_disponiveis)
+
+    # 3. Remove a frase escolhida para garantir que ela não seja repetida
+    frases_disponiveis.remove(resposta)
+
+    # 4. Envia a resposta
     await interaction.response.send_message(resposta)
 
 
