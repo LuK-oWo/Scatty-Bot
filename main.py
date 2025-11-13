@@ -92,15 +92,27 @@ FOTOS_ORIGINAIS = [
     "https://pbs.twimg.com/profile_images/1820791221469552640/CWDk2izV.jpg",
     "https://pt.quizur.com/_image?href=https://img.quizur.com/f/img62a8a9499a9493.07553446.png?lastEdited=1655220561&w=1024&h=1024&f=webp",
     "https://i.gruposwhats.app/grupo-de-whatsapp-flop-newmfx-6764a72a785d4.webp",
-
-
-
-
-
-
-
-
-
+    "https://media.tenor.com/3hSJbQlW4bAAAAAM/vaninha-newmfx.gif",
+    "https://media.tenor.com/TxDpXcNh65oAAAAM/newmfx-shake.gif",
+    "https://i1.sndcdn.com/artworks-DB1SsAwSgyl361uF-fsglMg-t500x500.jpg",
+    "https://pt.quizur.com/_image?href=https%3A%2F%2Fimg.quizur.com%2Ff%2Fimg632c971928f3f7.43833336.jpg%3FlastEdited%3D1663866661&w=400&h=400&f=webp",
+    "https://i.pinimg.com/736x/89/0d/fd/890dfd6939fbe27d4eca9214666bfb75.jpg",
+    "https://media.tenor.com/9Sasg04ziisAAAAM/newmfx-saori-kido.gif",
+    "https://pt.quizur.com/_image?href=https://dev-beta.quizur.com/storage/v1/object/public//imagens//20227569/281546e5-7210-47c2-b731-19e41e571534.png&w=600&h=600&f=webp",
+    "https://pbs.twimg.com/ext_tw_video_thumb/1714763373143826433/pu/img/W5MNZbfM2Q8xYgfk.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPyYh1E5i_wpgkCkyFy8zPkdRG6sKM4uSTYI6ItnkO0IYu6L8Ul7o5eovMrgDMnnr8UNQ&usqp=CAU",
+    "https://pt.quizur.com/_image?href=https%3A%2F%2Fimg.quizur.com%2Ff%2Fimg632c9801d53d48.44929953.jpg%3FlastEdited%3D1663866886&w=400&h=400&f=webp",
+    "https://pbs.twimg.com/ext_tw_video_thumb/1563991365549187072/pu/img/rHQKUkEY5r26iyXP.jpg",
+    "https://i.pinimg.com/236x/7e/e7/4c/7ee74c38961105368233e559491425f3.jpg",
+    "https://pbs.twimg.com/ext_tw_video_thumb/1772666092894216192/pu/img/Weh7INmKm6LTrWGk.jpg",
+    "https://pbs.twimg.com/profile_images/1577539043931430913/h6iRSjcc_400x400.jpg",
+    "https://pbs.twimg.com/ext_tw_video_thumb/1551398762047848448/pu/img/FM_xRQKSp-XSy9MG.jpg",
+    "https://pbs.twimg.com/ext_tw_video_thumb/1531325850142101504/pu/img/75ZKX9dTtdvfRUGM.jpg",
+    "https://pbs.twimg.com/media/GMI93DQXoAI4dSX.jpg",
+    "https://pbs.twimg.com/media/GVM4lNcXkAAJMAA.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgeWMqJ3tFNfORVlZGPBenQ337T6IdzSqGZA&s",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_pyKO_-bmbKWBJDGt9-GbVHbj0_wilore4Q&s",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWnTthI7LyynsqW9i1Ex7VvbVMgTZZSZFDWA&s",
 ]
 fotos_disponiveis = copy.copy(FOTOS_ORIGINAIS)
 
